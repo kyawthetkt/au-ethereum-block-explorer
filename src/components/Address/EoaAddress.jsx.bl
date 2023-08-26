@@ -1,0 +1,77 @@
+import { useEffect, useState } from "react";
+import { Utils } from "alchemy-sdk";
+import alchemy from "../../alchemy";
+import defaultNftImg from "../../assets/nft-default.jpg";
+
+
+function EoaAddress({ address}) {
+  const [nftObj, setNftObj] = useState(null);
+  const [balance, setBalance] = useState(0);
+
+  //  let response = await alchemy.core.getBalance("vitalik.eth", "latest")
+  // let response = await alchemy.nft.getNftsForOwner(owner)
+
+  useEffect(() => {
+    async function getNfts() {
+      try {
+        const response = await alchemy.nft.getNftsForOwner(address);
+        setNftObj(response);
+        console.log(response);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    getNfts();
+  }, [address]);
+
+  useEffect(() => {
+    async function getAccBalance() {
+      try {
+        let response = await alchemy.core.getBalance(address, "latest");
+        setBalance(response);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    getAccBalance();
+  }, [address]);
+
+  return (
+    <div className="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
+      <div className="flex items-center justify-between mb-10">
+        <div>
+          <h6 className="text-xs">Externall Owned Account</h6>
+          <h1 className="text-md font-bold mb-2 truncate">{address}</h1>
+          <p className="text-gray-800 text-sm">
+            ETH Balance: {Utils.formatEther(balance.toString())}
+          </p>
+        </div>
+      </div>
+      <div>
+        <h2 className="text-xl font-semibold mb-4">{nftObj?.totalCount} - NFT</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          {nftObj?.ownedNfts?.map((nft, index) => (
+            <div key={index} className="bg-white p-2 rounded shadow-md">
+              <img
+                src={defaultNftImg}
+                alt={defaultNftImg}
+                className="w-full h-32 object-cover rounded mb-2"
+              />
+              <h1 className="text-xs mb-1">{nft.contract.name}</h1>
+              <h1 className="text-sm mb-1">
+                {nft.contract.symbol} #{nft.tokenId}
+              </h1>
+              <p className="text-gray-500 text-xs truncate">
+                {nft.contract.address}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default EoaAddress;

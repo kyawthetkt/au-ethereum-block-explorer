@@ -1,36 +1,31 @@
-import { Alchemy, Network } from 'alchemy-sdk';
-import { useEffect, useState } from 'react';
-
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-
-// Refer to the README doc for more information about using API
-// keys in client-side code. You should never do this in production
-// level code.
-const settings = {
-  apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
-  network: Network.ETH_MAINNET,
-};
-
-
-// In this week's lessons we used ethers.js. Here we are using the
-// Alchemy SDK is an umbrella library with several different packages.
-//
-// You can read more about the packages here:
-//   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
-const alchemy = new Alchemy(settings);
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './components/Home';
+import NotFound from './components/NotFound';
+import Block from './components/Block';
+import BlockTransactions from './components/BlockTransactions';
+import Transaction from './components/Transaction';
+import Address from './components/Address';
 
 function App() {
-  const [blockNumber, setBlockNumber] = useState();
-
-  useEffect(() => {
-    async function getBlockNumber() {
-      setBlockNumber(await alchemy.core.getBlockNumber());
-    }
-
-    getBlockNumber();
-  });
-
-  return <div className="App">Block Number: {blockNumber}</div>;
+  return (
+    <Router>
+      <Header />
+      <section className="container mx-auto p-8 min-h-600">
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/block/:blockHashTag" component={Block} />
+        <Route path="/blockTransactions/:blockHashTag" component={BlockTransactions} />
+        <Route path="/transaction/:transactionHash" component={Transaction} />
+        <Route path="/address/:address" component={Address} />
+        <Route component={NotFound} />
+      </Switch>
+      </section>
+      <Footer />
+    </Router>
+  );  
 }
 
 export default App;

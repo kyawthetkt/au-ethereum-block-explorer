@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +14,17 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.min-h-150 {
+  min-height: 150px;
+}
+
+.min-h-600 {
+  min-height: 600px;
+}
+
+.erc20-logo-size {
+  width: 35px;
+  height: 35px;
 }
