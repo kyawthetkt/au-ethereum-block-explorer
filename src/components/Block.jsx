@@ -19,9 +19,7 @@ function Block() {
           : parseInt(blockHashTag);
         let response = await alchemy.core.getBlock(arg);
         setBlock(response);
-        console.log(response);
       } catch (error) {
-        console.log(error.message);
         setMessage(error.message);
       }
     }
@@ -52,8 +50,8 @@ function Block() {
     }
   };
 
-  if (message) {
-    return <p className="text-red-500 mb-4">{message}</p>;
+  if (message || block === null) {
+    return <p className="text-red-500 mb-4">{message?? "Unknow Block No"}</p>;
   }
 
   return (

@@ -8,6 +8,7 @@ import Block from './components/Block';
 import BlockTransactions from './components/BlockTransactions';
 import Transaction from './components/Transaction';
 import Address from './components/Address';
+import SigleNft from './components/SigleNft';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/blockTransactions/:blockHashTag" component={BlockTransactions} />
         <Route path="/transaction/:transactionHash" component={Transaction} />
         <Route path="/address/:address" component={Address} />
+        <Route path="/nft/:nftAddress/:tokenId" component={SigleNft} />
         <Route component={NotFound} />
       </Switch>
       </section>

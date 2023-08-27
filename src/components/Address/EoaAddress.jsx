@@ -206,7 +206,7 @@ function ContractAddress() {
                   <h1 className="text-sm mb-1">
                     <a
                       className="text-blue-500"
-                      href={`/address/${nft.contract.address}`}
+                      href={`/nft/${nft.contract.address}/${nft.tokenId}`}
                     >
                       {nft.contract.name}
                     </a>
@@ -260,7 +260,7 @@ function ContractAddress() {
                         {transer.category === "erc721" && (
                           <a
                             className="text-blue-500"
-                            href={`/token/${parseInt(transer.tokenId, 16)}`}
+                            href={`/address/${transer.rawContract.address}/${parseInt(transer.tokenId, 16)}`}
                           >
                             {parseInt(transer.tokenId, 16)}
                           </a>
@@ -273,7 +273,7 @@ function ContractAddress() {
                                 {parseInt(meta.value, 16)} of Token ID{" "}
                                 <a
                                   className="text-blue-500"
-                                  href={`/token/${parseInt(meta.tokenId, 16)}`}
+                                  href={`/nft/${transer.rawContract.address}/${parseInt(meta.tokenId, 16)}`}
                                 >
                                   [{parseInt(meta.tokenId, 16)}]
                                 </a>
